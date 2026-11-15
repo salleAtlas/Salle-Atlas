@@ -1,0 +1,232 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
+  <diagram id="etat-3" name="Parcours client">
+    <mxGraphModel dx="908" dy="646" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1980" pageHeight="1240" background="#FFFFFF" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;fontSize=16;fontStyle=1;align=left;verticalAlign=middle;fontColor=#000000;" value="Diagramme d&#39;états-transitions : parcours client (inscription / connexion → réservation → PassQR)" vertex="1">
+          <mxGeometry height="30" width="900" x="40" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="i0" parent="1" style="ellipse;html=1;fillColor=#000000;strokeColor=#000000;aspect=fixed;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="40" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="VIS" parent="1" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontColor=#000000;fontSize=12;verticalAlign=top;align=center;spacingTop=2;" value="&lt;b&gt;VISITEUR&lt;/b&gt;&lt;hr style=&quot;border:none;border-top:1px solid #000000;margin:4px 0&quot;&gt;&lt;div style=&quot;text-align:left;font-size:11px;padding-left:6px&quot;&gt;entry / afficher la page d&#39;accueil&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="200" x="120" y="135" as="geometry" />
+        </mxCell>
+        <mxCell id="AUTH" parent="1" style="swimlane;rounded=1;absoluteArcSize=1;arcSize=24;html=1;startSize=30;fillColor=#FFFFFF;swimlaneFillColor=#FFFFFF;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=13;container=1;collapsible=0;" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;AUTH&lt;/font&gt;" vertex="1">
+          <mxGeometry height="360" width="760" x="420" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="INS" parent="AUTH" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontColor=#000000;fontSize=12;verticalAlign=top;align=center;spacingTop=2;" value="&lt;b&gt;SAISIE_INSCRIPTION&lt;/b&gt;&lt;hr style=&quot;border:none;border-top:1px solid #000000;margin:4px 0&quot;&gt;&lt;div style=&quot;text-align:left;font-size:11px;padding-left:6px&quot;&gt;do / saisir email, mot de passe&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="230" x="60" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="C1" parent="AUTH" style="rhombus;html=1;fillColor=#FFFFFF;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="380" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="CON" parent="AUTH" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontColor=#000000;fontSize=12;verticalAlign=top;align=center;spacingTop=2;" value="&lt;b&gt;SAISIE_CONNEXION&lt;/b&gt;&lt;hr style=&quot;border:none;border-top:1px solid #000000;margin:4px 0&quot;&gt;&lt;div style=&quot;text-align:left;font-size:11px;padding-left:6px&quot;&gt;do / saisir email, mot de passe&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="230" x="60" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="C2" parent="AUTH" style="rhombus;html=1;fillColor=#FFFFFF;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="380" y="245" as="geometry" />
+        </mxCell>
+        <mxCell id="CLI" parent="1" style="swimlane;rounded=1;absoluteArcSize=1;arcSize=24;html=1;startSize=30;fillColor=#FFFFFF;swimlaneFillColor=#FFFFFF;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=13;container=1;collapsible=0;" value="CLIENT_AUTHENTIFIE" vertex="1">
+          <mxGeometry height="720" width="1880" x="40" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="i1" parent="CLI" style="ellipse;html=1;fillColor=#000000;strokeColor=#000000;aspect=fixed;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="30" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="CRE" parent="CLI" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontColor=#000000;fontSize=12;verticalAlign=top;align=center;spacingTop=2;" value="&lt;b&gt;CHOIX_CRENEAU&lt;/b&gt;&lt;hr style=&quot;border:none;border-top:1px solid #000000;margin:4px 0&quot;&gt;&lt;div style=&quot;text-align:left;font-size:11px;padding-left:6px&quot;&gt;do / saisir date, heure de début, durée&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="220" x="90" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="C3" parent="CLI" style="rhombus;html=1;fillColor=#FFFFFF;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="430" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="DIS" parent="CLI" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontColor=#000000;fontSize=12;verticalAlign=top;align=center;spacingTop=2;" value="&lt;b&gt;CONSULTATION_DISPONIBILITES&lt;/b&gt;&lt;hr style=&quot;border:none;border-top:1px solid #000000;margin:4px 0&quot;&gt;&lt;div style=&quot;text-align:left;font-size:11px;padding-left:6px&quot;&gt;entry / afficher salles et places&lt;br&gt;            libres sur le créneau&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="260" x="600" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="COMP" parent="CLI" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontColor=#000000;fontSize=12;verticalAlign=top;align=center;spacingTop=2;" value="&lt;b&gt;COMPOSITION_RESERVATION&lt;/b&gt;&lt;hr style=&quot;border:none;border-top:1px solid #000000;margin:4px 0&quot;&gt;&lt;div style=&quot;text-align:left;font-size:11px;padding-left:6px&quot;&gt;entry / afficher équipements inclus&lt;br&gt;ajouterEquipement(e) / recalculer total&lt;br&gt;retirerEquipement(e) / recalculer total&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="290" x="1000" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="C4" parent="CLI" style="rhombus;html=1;fillColor=#FFFFFF;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="1410" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="REC" parent="CLI" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontColor=#000000;fontSize=12;verticalAlign=top;align=center;spacingTop=2;" value="&lt;b&gt;RECAPITULATIF&lt;/b&gt;&lt;hr style=&quot;border:none;border-top:1px solid #000000;margin:4px 0&quot;&gt;&lt;div style=&quot;text-align:left;font-size:11px;padding-left:6px&quot;&gt;entry / afficher salle × durée&lt;br&gt;            + équipements = total (DT)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="290" x="1550" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="C5" parent="CLI" style="rhombus;html=1;fillColor=#FFFFFF;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="1680" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="ATT" parent="CLI" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontColor=#000000;fontSize=12;verticalAlign=top;align=center;spacingTop=2;" value="&lt;b&gt;EN_ATTENTE_PAIEMENT&lt;/b&gt;&lt;hr style=&quot;border:none;border-top:1px solid #000000;margin:4px 0&quot;&gt;&lt;div style=&quot;text-align:left;font-size:11px;padding-left:6px&quot;&gt;entry / bloquer le créneau 10 min&lt;br&gt;do / page Stripe Checkout&lt;br&gt;carteRefusée / afficher erreur&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="290" x="1550" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="CONF" parent="CLI" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontColor=#000000;fontSize=12;verticalAlign=top;align=center;spacingTop=2;" value="&lt;b&gt;RESERVATION_CONFIRMEE&lt;/b&gt;&lt;hr style=&quot;border:none;border-top:1px solid #000000;margin:4px 0&quot;&gt;&lt;div style=&quot;text-align:left;font-size:11px;padding-left:6px&quot;&gt;entry / statut = « confirmée »&lt;br&gt;entry / générer PassQR (jeton signé)&lt;br&gt;entry / envoyer reçu par email&lt;br&gt;scan [heure &amp;lt; début − 15 min] / afficher « trop tôt »&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="300" x="1000" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="ENT" parent="CLI" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontColor=#000000;fontSize=12;verticalAlign=top;align=center;spacingTop=2;" value="&lt;b&gt;ENTREE_VALIDEE&lt;/b&gt;&lt;hr style=&quot;border:none;border-top:1px solid #000000;margin:4px 0&quot;&gt;&lt;div style=&quot;text-align:left;font-size:11px;padding-left:6px&quot;&gt;entry / enregistrer dateEntree&lt;br&gt;scan [heure ≤ dateFin] / afficher&lt;br&gt;« entrée déjà validée à HH:MM »&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="300" x="520" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="TERM" parent="CLI" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontColor=#000000;fontSize=12;verticalAlign=top;align=center;spacingTop=2;" value="&lt;b&gt;TERMINEE&lt;/b&gt;&lt;hr style=&quot;border:none;border-top:1px solid #000000;margin:4px 0&quot;&gt;&lt;div style=&quot;text-align:left;font-size:11px;padding-left:6px&quot;&gt;entry / pass QR expiré&lt;br&gt;scan / refuser (rouge)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="300" x="80" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="f2" parent="CLI" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;aspect=fixed;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="145" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="ABAN" parent="CLI" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontColor=#000000;fontSize=12;verticalAlign=top;align=center;spacingTop=2;" value="&lt;b&gt;RESERVATION_ABANDONNEE&lt;/b&gt;&lt;hr style=&quot;border:none;border-top:1px solid #000000;margin:4px 0&quot;&gt;&lt;div style=&quot;text-align:left;font-size:11px;padding-left:6px&quot;&gt;entry / libérer le créneau&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="290" x="1550" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="f1" parent="CLI" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;aspect=fixed;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="1400" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="i0" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;" target="VIS" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="VIS" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.3;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="INS" value="clicInscription()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="VIS" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="CON" value="clicConnexion()">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="270" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="INS" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="C1" value="soumettre(email, mdp)">
+          <mxGeometry relative="1" x="-0.1111" y="-10" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="C1" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="INS" value="[email déjà utilisé ∨ mdp non conforme]&lt;br&gt;/ afficher erreur">
+          <mxGeometry relative="1" x="0.4035" y="-20" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="815" y="100" />
+              <mxPoint x="595" y="100" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="C1" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.74;entryY=0;entryDx=0;entryDy=0;" target="CON" value="[données valides]&lt;br&gt;/ hacher mdp (bcrypt), créer compte">
+          <mxGeometry relative="1" x="-0.5185" y="-35" as="geometry">
+            <mxPoint x="35" y="35" as="offset" />
+            <Array as="points">
+              <mxPoint x="815" y="240" />
+              <mxPoint x="650" y="240" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="CON" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="C2" value="soumettre(email, mdp)">
+          <mxGeometry relative="1" x="0.1111" y="20" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="C2" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="CON" value="[identifiants incorrects]&lt;br&gt;/ afficher « identifiants incorrects »">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="815" y="395" />
+              <mxPoint x="595" y="395" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="C2" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5106;entryY=0;entryDx=0;entryDy=0;" target="CLI" value="[identifiants valides]&lt;br&gt;/ créer la session">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1000" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="CLI" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0.0691;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" target="VIS" value="deconnexion()&lt;br&gt;/ détruire la session">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r1" edge="1" parent="1" source="i1" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="CRE" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r2" edge="1" parent="1" source="CRE" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="C3" value="validerCreneau()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r3" edge="1" parent="1" source="C3" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="CRE" value="[date passée ∨ durée hors limites] / afficher erreur">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="485" y="530" />
+              <mxPoint x="240" y="530" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r4" edge="1" parent="1" source="C3" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="DIS" value="[créneau valide]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r5" edge="1" parent="1" source="DIS" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0.2308;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="CRE" value="modifierCreneau()">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="700" y="690" />
+              <mxPoint x="240" y="690" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r6" edge="1" parent="1" source="DIS" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="COMP" value="choisirEspace(e)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r7" edge="1" parent="1" source="COMP" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.7692;entryY=1;entryDx=0;entryDy=0;" target="DIS" value="retour()">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1185" y="720" />
+              <mxPoint x="840" y="720" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r8" edge="1" parent="1" source="COMP" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="C4" value="valider(nbPersonnes)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r9" edge="1" parent="1" source="C4" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="COMP" value="[nbPersonnes &amp;gt; capacité] / afficher erreur bloquante">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1465" y="530" />
+              <mxPoint x="1185" y="530" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r10" edge="1" parent="1" source="C4" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="REC" value="[nbPersonnes&lt;br&gt;≤ capacité]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r11" edge="1" parent="1" source="REC" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="C5" value="payer()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r12" edge="1" parent="1" source="C5" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="DIS" value="[créneau pris entre-temps] / afficher « créneau indisponible »">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="770" y="775" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r13" edge="1" parent="1" source="C5" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ATT" value="[créneau libre]&lt;br&gt;/ creerSessionStripe()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r14" edge="1" parent="1" source="ATT" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="CONF" value="webhook checkout.session.completed&lt;br&gt;[signature valide]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r15" edge="1" parent="1" source="ATT" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ABAN" value="after(10 min) [non payée]&lt;br&gt;/ expirer session Stripe">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="q1" edge="1" parent="1" source="CONF" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="ENT" value="scan + validerEntree()&lt;br&gt;[début − 15 min ≤ heure ≤ dateFin]">
+          <mxGeometry relative="1" y="-15" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="q2" edge="1" parent="1" source="ENT" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="TERM" value="[heure &amp;gt; dateFin]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="q3" edge="1" parent="1" source="CONF" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.7333;entryY=1;entryDx=0;entryDy=0;" target="TERM" value="[heure &amp;gt; dateFin] (client absent)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1190" y="1040" />
+              <mxPoint x="340" y="1040" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="q4" edge="1" parent="1" source="TERM" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0.2667;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="f2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r17" edge="1" parent="1" source="ABAN" style="html=1;endArrow=open;endSize=10;rounded=0;fontSize=11;fontColor=#000000;strokeColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="f1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
