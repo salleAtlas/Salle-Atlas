@@ -11,8 +11,9 @@ This document is the team's active sprint board and execution guide for **Salle 
 | **S1** | Backend foundation (Express 5, Mongoose 9, all 8 locked UML schemas, singleton seed, `GET /api/health`, `backend/README.md`) | `chore/backend-setup` | **DONE** |
 | **S2** | Frontend foundation (Angular 18 standalone, Angular Material `azure-blue`, all 7 locked `snake_case` interfaces, navbar shell, unit tests, `frontend/README.md`) | `chore/client-setup` | **DONE** |
 | **W1 Deps** | All Wave 1 backend dependencies pre-installed & audited (`bcrypt`, `express-validator`, `express-rate-limit`, `jsonwebtoken`, `ejs`, `express-ejs-layouts`, `express-session`, `connect-mongo`, `method-override`) | `chore/wave1-deps` | **DONE** |
+| **CI** | Path-scoped GitHub Actions (`backend-ci.yml`, `frontend-ci.yml`), `.nvmrc`, `npm run check` quality gates, isolated Jest `*_test` DB harness & baseline smoke tests | `chore/ci-pipeline` | **DONE** |
 
-> **Starting Point:** `S1`, `S2`, and `chore/wave1-deps` are ready on `develop`. All feature development starts at **Wave 1**—no teammate needs to run `npm install` on a feature branch.
+> **Starting Point:** `S1`, `S2`, `chore/wave1-deps`, and `chore/ci-pipeline` are ready on `develop`. All feature development starts at **Wave 1**—no teammate needs to run `npm install` on a feature branch.
 
 ---
 
@@ -41,7 +42,11 @@ git pull origin develop
 # 2. Cut your story branch off develop
 git checkout -b feat/<story-branch-name>
 
-# 3. Push and open a PR targeting `develop` (NEVER `main`)
+# 3. Run the exact CI quality gate locally before pushing
+cd backend && npm run check    # if you touched backend/
+cd frontend && npm run check   # if you touched frontend/
+
+# 4. Push and open a PR targeting `develop` (NEVER `main`)
 git push -u origin feat/<story-branch-name>
 ~~~
 
@@ -286,7 +291,11 @@ Every Pull Request into `develop` will be checked against these rules:
 - [ ] **Raw Stripe webhook:** `POST /api/payments/webhook` uses `express.raw({ type: 'application/json' })` **before** `app.use(express.json())`.
 - [ ] **Express 5 safe:** No bare `'*'` route wildcards.
 - [ ] **Explicit `.sort()` indexes:** Every field passed to `.sort()` is indexed in Mongoose.
-- [ ] **Local verification passes:**
-  - Backend: `cd backend && npm run dev` starts cleanly (`GET /api/health` → `200`).
-  - Frontend: `cd frontend && npm run build` and `npx ng test --watch=false --browsers=ChromeHeadless` pass with zero errors.
+- [ ] **CI quality gate passes locally & on GitHub Actions:**
+  - Backend: `cd backend && npm run check` passes (`jest --runInBand`).
+  - Frontend: `cd frontend && npm run check` passes (`ng build` + `ChromeHeadless` Karma tests).
+- [ ] **Test & env discipline:**
+  - Add backend integration tests under `backend/tests/*.test.js` — **do not** manually connect/disconnect MongoDB (`jest.setup.js` automatically handles the isolated `*_test` DB, collection cleanup, and singleton seeding).
+  - Mock external services (Stripe, Nodemailer) in tests; never hit live third-party endpoints in CI.
+  - If you add a new required variable to `backend/src/config/env.config.js`, add a safe test default for it in `backend/tests/jest.env.js` in the same PR.
 - [ ] **Clean repo:** No `.env`, no `node_modules/`, and no test uploads committed.
