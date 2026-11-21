@@ -1,0 +1,59 @@
+name: Backend CI
+
+on:
+  pull_request:
+    paths: ["backend/**", ".github/workflows/backend-ci.yml", ".nvmrc"]
+  push:
+    branches: [develop, main]
+    paths: ["backend/**", ".github/workflows/backend-ci.yml", ".nvmrc"]
+
+# A new push to the same PR cancels the previous, now useless, run.
+concurrency:
+  group: backend-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: backend
+
+    services:
+      mongodb:
+        image: mongo:7
+        ports: ["27017:27017"]
+        options: >-
+          --health-cmd "mongosh --eval 'db.adminCommand(\"ping\")'"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      NODE_ENV: test
+      MONGODB_URI: mongodb://127.0.0.1:27017/salle_atlas_test
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Install dependencies (fails if package-lock.json is out of date)
+        run: npm ci
+
+      # Same command developers run locally before pushing.
+      - name: Quality gate
+        run: npm run check
+
+      # Informational only: flags high/critical prod advisories without blocking merges.
+      - name: Production security audit
+        continue-on-error: true
+        run: npm audit --omit=dev --audit-level=high
