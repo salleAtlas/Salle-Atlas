@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const Client = require('../models/client.model');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'change_me_client_jwt_secret';
 
@@ -22,12 +21,7 @@ async function authClient(req, res, next) {
       return res.status(401).json({ error: 'Invalid or expired token' });
     }
 
-    const client = await Client.findById(decoded.id).select('-password_hash -reset_token -reset_token_expires');
-    if (!client) {
-      return res.status(401).json({ error: 'Client account no longer exists' });
-    }
-
-    req.client = client;
+    req.user = decoded;
     return next();
   } catch (err) {
     return next(err);

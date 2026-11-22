@@ -75,11 +75,11 @@ async function loginClient(email, password) {
   };
 }
 
-async function getClientProfile(clientId) {
+async function getMeById(clientId) {
   const client = await Client.findById(clientId).select('-password_hash -reset_token -reset_token_expires');
   if (!client) {
-    const err = new Error('Client not found');
-    err.status = 404;
+    const err = new Error('Client account no longer exists');
+    err.status = 401;
     throw err;
   }
   return client;
@@ -88,6 +88,6 @@ async function getClientProfile(clientId) {
 module.exports = {
   registerClient,
   loginClient,
-  getClientProfile,
+  getMeById,
   generateToken,
 };
