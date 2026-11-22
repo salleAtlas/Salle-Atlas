@@ -1,0 +1,48 @@
+name: PR Branch Policy
+
+on:
+  pull_request:
+    branches: [main, develop]
+    types: [opened, reopened, edited, synchronize]
+
+permissions:
+  contents: read
+
+jobs:
+  branch-guard:
+    name: Enforce Source Branch Policy
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Validate source -> target branch rule
+        env:
+          BASE_BRANCH: ${{ github.base_ref }}
+          HEAD_BRANCH: ${{ github.head_ref }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          CURRENT_REPO: ${{ github.repository }}
+        run: |
+          echo "Checking PR: ${HEAD_BRANCH} -> ${BASE_BRANCH}"
+
+          if [[ "$BASE_BRANCH" == "main" ]]; then
+            if [[ "$HEAD_REPO" != "$CURRENT_REPO" || "$HEAD_BRANCH" != "develop" ]]; then
+              echo "::error::PRs into 'main' are ONLY allowed from 'develop' in this repository (got '${HEAD_BRANCH}')."
+              exit 1
+            fi
+            echo "Allowed: develop -> main"
+            exit 0
+          fi
+
+          if [[ "$BASE_BRANCH" == "develop" ]]; then
+            # Pattern mode (prefixes matching your task plan):
+            ALLOWED_PATTERN='^(feat|fix|chore|docs|refactor|test)/.+$'
+            # Or exact branch names only (replace the line above):
+            # ALLOWED_PATTERN='^(branch-a|branch-b|branch-c)$'
+
+            if [[ ! "$HEAD_BRANCH" =~ $ALLOWED_PATTERN ]]; then
+              echo "::error::PRs into 'develop' must match '${ALLOWED_PATTERN}' (got '${HEAD_BRANCH}')."
+              exit 1
+            fi
+            echo "Allowed: ${HEAD_BRANCH} -> develop"
+            exit 0
+          fi
