@@ -95,7 +95,7 @@ git checkout develop && git pull origin develop && (cd backend && npm ci) && (cd
 ### Track 1.3 — Equipment Catalog (`B1`)
 - **Assignee:** `@oussema_mellouli`
 - **Stories & Branches:**
-  - [ ] **B1 (P1):** Equipment Catalog Management — `feat/manager-equipments`
+  - [x] **B1 (P1):** Equipment Catalog Management — `feat/manager-equipments`
 - **Pre-Installed Packages Used (Backend):** `method-override`, `express-validator` *(already in `package.json`)*
 - **Owned Files:**
   - Backend: `src/models/equipment.model.js` *(append `update_details`)*, `src/middlewares/validators/equipment.validator.js` (`validateEquipment`, `checkEquipmentNotUsed`), `src/controllers/manager/managerEquipment.controller.js`, `src/routes/manager/equipment.routes.js`, `src/views/manager/equipments/index.ejs`
