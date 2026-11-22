@@ -16,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
       <a mat-button routerLink="/search">Spaces</a>
       <a mat-button routerLink="/my-reservations">My Reservations</a>
       <a mat-button routerLink="/login">Login</a>
+      <a mat-button routerLink="/register">Register</a>
     </mat-toolbar>
   `,
 })

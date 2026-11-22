@@ -21,8 +21,8 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/api/health', getHealth);
 
 // Feature routers mounted by subsequent PRs:
-// app.use('/api', apiRoutes);
-// app.use('/manager', managerRoutes);
+const apiRoutes = require('./routes/api/index.routes');
+app.use('/api', apiRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
