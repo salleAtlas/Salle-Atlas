@@ -106,7 +106,7 @@ git checkout develop && git pull origin develop && (cd backend && npm ci) && (cd
 ### Track 1.4 — Open Space Singleton (`B5`)
 - **Assignee:** `@youssef_masmoudi`
 - **Stories & Branches:**
-  - [ ] **B5 (P1):** Configure Open Space Singleton — `feat/manager-open-space`
+  - [x] **B5 (P1):** Configure Open Space Singleton — `feat/manager-open-space`
 - **Pre-Installed Packages Used (Backend):** `method-override`, `express-validator` *(already in `package.json`)*
 - **Owned Files:**
   - Backend: `src/models/open_space.model.js` *(append `get_remaining_seats`, `is_available`)*, `src/middlewares/validators/openSpace.validator.js`, `src/controllers/manager/managerOpenSpace.controller.js`, `src/routes/manager/openSpace.routes.js`, `src/views/manager/open-space/edit.ejs`
