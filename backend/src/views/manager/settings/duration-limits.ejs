@@ -1,0 +1,10 @@
+<h1>Limites de duree des reservations</h1>
+
+<% if (flash.error) { %><p class="alert alert-danger"><%= flash.error %></p><% } %>
+<% if (flash.success) { %><p class="alert alert-success"><%= flash.success %></p><% } %>
+
+<form action="/manager/duration-limits?_method=PUT" method="POST">
+  <label>Duree minimale (heures) <input type="number" name="min_duration_hours" min="1" step="1" value="<%= settings.min_duration_hours %>" required></label>
+  <label>Duree maximale (heures) <input type="number" name="max_duration_hours" min="1" step="1" value="<%= settings.max_duration_hours %>" required></label>
+  <button type="submit">Enregistrer</button>
+</form>
