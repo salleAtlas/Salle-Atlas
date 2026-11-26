@@ -1,0 +1,16 @@
+<h1>Horaires d'ouverture</h1>
+
+<% if (flash.error) { %><p class="alert alert-danger"><%= flash.error %></p><% } %>
+<% if (flash.success) { %><p class="alert alert-success"><%= flash.success %></p><% } %>
+
+<form action="/manager/operating-hours?_method=PUT" method="POST">
+  <label>Ouverture <input type="time" name="opening_time" value="<%= settings.opening_time %>" required></label>
+  <label>Fermeture <input type="time" name="closing_time" value="<%= settings.closing_time %>" required></label>
+  <label>Jours fermes (0=dimanche .. 6=samedi, separes par des virgules)
+    <input name="closed_days_of_week" value="<%= settings.closed_days_of_week.join(',') %>">
+  </label>
+  <label>Dates fermees ponctuelles (YYYY-MM-DD, separees par des virgules)
+    <input name="specific_closed_dates" value="<%= settings.specific_closed_dates.join(',') %>">
+  </label>
+  <button type="submit">Enregistrer</button>
+</form>
