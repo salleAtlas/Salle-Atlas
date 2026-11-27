@@ -12,6 +12,14 @@ const globalSettingSchema = new mongoose.Schema(
   { collection: 'global_settings', timestamps: true }
 );
 
+// B7 — update the allowed reservation duration bounds (hours) on the singleton document.
+globalSettingSchema.methods.update_limits = async function (fields = {}) {
+  const { min_duration_hours, max_duration_hours } = fields;
+  if (min_duration_hours !== undefined) this.min_duration_hours = min_duration_hours;
+  if (max_duration_hours !== undefined) this.max_duration_hours = max_duration_hours;
+  return this.save();
+};
+
 // B6 — update opening/closing time, closed days of week and specific closed dates.
 // Only touches the fields that are passed in, so a B7 (duration limits) update
 // made through update_limits() is never clobbered by this method, and vice versa.
