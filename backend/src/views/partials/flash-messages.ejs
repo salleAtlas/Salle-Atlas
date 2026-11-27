@@ -1,0 +1,14 @@
+<% if (typeof flash !== 'undefined' && flash) { %>
+  <% if (flash.success) { %>
+    <div class="alert alert-success" role="alert">
+      <i class="bi bi-check-circle"></i>
+      <span><%= flash.success %></span>
+    </div>
+  <% } %>
+  <% if (flash.error) { %>
+    <div class="alert alert-danger" role="alert">
+      <i class="bi bi-exclamation-triangle"></i>
+      <span><%= flash.error %></span>
+    </div>
+  <% } %>
+<% } %>

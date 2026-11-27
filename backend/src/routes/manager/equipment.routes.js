@@ -6,14 +6,7 @@ const {
 } = require('../../middlewares/validators/equipment.validator');
 const managerEquipmentController = require('../../controllers/manager/managerEquipment.controller');
 
-try {
-  const requireManager = require('../../middlewares/requireManager.middleware');
-  if (typeof requireManager === 'function') {
-    router.use(requireManager);
-  }
-} catch {
-  // middleware manager optionnel en attendant A3
-}
+// Mounted behind requireManager in routes/manager/index.routes.js
 
 router.get('/', managerEquipmentController.listEquipments);
 router.post('/', validateEquipment, managerEquipmentController.createEquipment);

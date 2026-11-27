@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include('../partials/head') %>
+</head>
+<body class="manager-body">
+  <div class="manager-shell">
+    <%- include('../partials/sidebar') %>
+    <div class="manager-main">
+      <%- include('../partials/navbar') %>
+      <div class="manager-container">
+        <%- include('../partials/flash-messages') %>
+        <main class="manager-content">
+          <%- body %>
+        </main>
+        <%- include('../partials/footer') %>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
