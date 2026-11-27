@@ -1,0 +1,358 @@
+<style>
+  .tag-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--tag-bg, #e8ded4);
+    color: var(--text-main, #2b2622);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .tag-badge:hover {
+    transform: translateY(-1px);
+  }
+
+  .equipment-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 8px;
+  }
+
+  .icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    color: #6a5e55;
+    padding: 2px 5px;
+    border-radius: 6px;
+  }
+  .icon-btn:hover {
+    color: #2b2622;
+  }
+  .icon-btn.delete:hover {
+    color: #d9534f;
+  }
+
+  .equipments-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 8px;
+  }
+
+  .used-count-pill {
+    background: #d8c8b8;
+    color: #3b3028;
+    font-size: 11px;
+    padding: 2px 7px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(30, 25, 20, 0.45);
+    backdrop-filter: blur(2px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-backdrop.open {
+    display: flex;
+  }
+
+  .modal-box {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 32px;
+    width: 100%;
+    max-width: 460px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .modal-title {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .btn-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #7d756d;
+  }
+
+  .form-group {
+    margin-bottom: 18px;
+  }
+  .form-label {
+    display: block;
+    font-size: 13.5px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .form-control {
+    width: 100%;
+    padding: 11px 16px;
+    border-radius: 14px;
+    border: 1px solid #ede6dd;
+    background: #faf7f4;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+  }
+  .form-control:focus {
+    border-color: #c88f61;
+    background: #ffffff;
+  }
+
+  .preview-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+  }
+  .preview-table th {
+    text-align: left;
+    font-size: 13px;
+    color: #7d756d;
+    font-weight: 500;
+    padding: 8px 16px;
+  }
+  .preview-table td {
+    background: #ffffff;
+    padding: 14px 16px;
+    font-size: 14px;
+    border-top: 1px solid #f1eae2;
+    border-bottom: 1px solid #f1eae2;
+  }
+  .preview-table tr td:first-child {
+    border-left: 1px solid #f1eae2;
+    border-top-left-radius: 14px;
+    border-bottom-left-radius: 14px;
+    font-weight: 600;
+  }
+  .preview-table tr td:last-child {
+    border-right: 1px solid #f1eae2;
+    border-top-right-radius: 14px;
+    border-bottom-right-radius: 14px;
+  }
+</style>
+
+<div class="section-header">
+  <h1 class="section-title">Salles</h1>
+  <a href="/manager/rooms/new" class="btn btn-primary">
+    <i class="bi bi-plus-lg"></i> Ajouter une salle
+  </a>
+</div>
+
+<div class="content-card">
+  <table class="preview-table">
+    <thead>
+      <tr>
+        <th>Salle</th>
+        <th>Capacite</th>
+        <th>Prix / h</th>
+        <th>Equipements</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Salle Atlas</td>
+        <td>8</td>
+        <td>15 DT</td>
+        <td><span class="tag-badge" style="background:#dcf2e3; color:#245836;">Ecran</span></td>
+        <td>
+          <span style="background: #fbf3df; color: #7f5c12; font-size: 12px; padding: 6px 14px; border-radius: 16px; font-weight: 500;">
+            1 reservation a venir
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td>Salle Boreal</td>
+        <td>4</td>
+        <td>10 DT</td>
+        <td><span class="tag-badge" style="background:#dcf2e3; color:#245836;">Tableau blanc</span></td>
+        <td>
+          <a href="/manager/rooms" class="btn btn-secondary btn-sm">Modifier</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="sub-note">Suppression refusee s'il existe une reservation a venir.</p>
+</div>
+
+<div class="section-header" style="margin-top: 40px;">
+  <h2 class="section-title">Equipements</h2>
+  <button type="button" class="btn btn-secondary" onclick="openAddModal()">
+    <i class="bi bi-plus-lg"></i> Ajouter
+  </button>
+</div>
+
+<div class="content-card">
+  <% if (equipments.length === 0) { %>
+    <p style="color: #7d756d; font-size: 14px;">Aucun equipement pour le moment. Cliquez sur Ajouter.</p>
+  <% } else { %>
+    <div class="equipments-cloud">
+      <% equipments.forEach(function(eq) { %>
+        <% const usedInRooms = (usageMap && usageMap[eq._id.toString()]) || []; %>
+        <div class="tag-badge" title="<%= eq.description || eq.name %>">
+          <i class="bi <%= eq.icon || 'bi-gear' %>"></i>
+          <span><%= eq.name %></span>
+
+          <% if (usedInRooms.length > 0) { %>
+            <span class="used-count-pill" title="Associe a : <%= usedInRooms.join(', ') %>">
+              <%= usedInRooms.length %> salle(s)
+            </span>
+          <% } %>
+
+          <div class="equipment-actions">
+            <button
+              type="button"
+              class="icon-btn"
+              title="Modifier"
+              onclick="openEditModal('<%= eq._id %>', '<%= eq.name %>', '<%= eq.icon || '' %>', '<%= eq.description || '' %>')">
+              <i class="bi bi-pencil"></i>
+            </button>
+
+            <form
+              method="POST"
+              action="/manager/equipments/<%= eq._id %>?_method=DELETE"
+              style="display: inline;"
+              onsubmit="return confirmDelete('<%= eq.name %>', <%= usedInRooms.length %>)">
+              <input type="hidden" name="_method" value="DELETE">
+              <button type="submit" class="icon-btn delete" title="Supprimer">
+                <i class="bi bi-trash"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  <% } %>
+
+  <p class="sub-note">
+    Les equipements n'ont pas de prix : ils sont inclus dans la salle. Un equipement utilise par une salle ne peut pas etre supprime.
+  </p>
+</div>
+
+<div id="addModal" class="modal-backdrop">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 class="modal-title">Ajouter un equipement</h3>
+      <button type="button" class="btn-close" onclick="closeAddModal()">&times;</button>
+    </div>
+    <form method="POST" action="/manager/equipments">
+      <div class="form-group">
+        <label class="form-label" for="add-name">Nom de l'equipement *</label>
+        <input type="text" id="add-name" name="name" class="form-control" placeholder="ex: Data show, Ecran, Tableau blanc" required autofocus>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="add-icon">Icone Bootstrap</label>
+        <input type="text" id="add-icon" name="icon" class="form-control" placeholder="ex: bi-projector, bi-tv" value="bi-gear">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="add-desc">Description</label>
+        <textarea id="add-desc" name="description" class="form-control" rows="2" placeholder="Description optionnelle"></textarea>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px;">
+        <button type="button" class="btn btn-secondary" onclick="closeAddModal()">Annuler</button>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="editModal" class="modal-backdrop">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 class="modal-title">Modifier l'equipement</h3>
+      <button type="button" class="btn-close" onclick="closeEditModal()">&times;</button>
+    </div>
+    <form id="editForm" method="POST" action="">
+      <input type="hidden" name="_method" value="PUT">
+
+      <div class="form-group">
+        <label class="form-label" for="edit-name">Nom de l'equipement *</label>
+        <input type="text" id="edit-name" name="name" class="form-control" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="edit-icon">Icone Bootstrap</label>
+        <input type="text" id="edit-icon" name="icon" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="edit-desc">Description</label>
+        <textarea id="edit-desc" name="description" class="form-control" rows="2"></textarea>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px;">
+        <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Annuler</button>
+        <button type="submit" class="btn btn-primary">Mettre a jour</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  function openAddModal() {
+    document.getElementById('addModal').classList.add('open');
+    document.getElementById('add-name').focus();
+  }
+  function closeAddModal() {
+    document.getElementById('addModal').classList.remove('open');
+  }
+
+  function openEditModal(id, name, icon, desc) {
+    const form = document.getElementById('editForm');
+    form.action = '/manager/equipments/' + id;
+    document.getElementById('edit-name').value = name;
+    document.getElementById('edit-icon').value = icon || 'bi-gear';
+    document.getElementById('edit-desc').value = desc || '';
+    document.getElementById('editModal').classList.add('open');
+    document.getElementById('edit-name').focus();
+  }
+  function closeEditModal() {
+    document.getElementById('editModal').classList.remove('open');
+  }
+
+  function confirmDelete(name, usedCount) {
+    if (usedCount > 0) {
+      alert("Impossible de supprimer " + name + " : cet equipement est utilise par " + usedCount + " salle(s).");
+      return false;
+    }
+    return confirm("Voulez-vous supprimer l'equipement " + name + " ?");
+  }
+
+  window.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeAddModal();
+      closeEditModal();
+    }
+  });
+  document.getElementById('addModal').addEventListener('click', function(e) {
+    if (e.target === this) closeAddModal();
+  });
+  document.getElementById('editModal').addEventListener('click', function(e) {
+    if (e.target === this) closeEditModal();
+  });
+</script>

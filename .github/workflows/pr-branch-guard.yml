@@ -1,0 +1,46 @@
+name: PR Branch Policy
+
+on:
+  pull_request:
+    branches: [main, develop]
+    types: [opened, reopened, edited, synchronize]
+
+permissions:
+  contents: read
+
+jobs:
+  branch-guard:
+    name: Enforce Source Branch Policy
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Validate source -> target branch rule
+        env:
+          BASE_BRANCH: ${{ github.base_ref }}
+          HEAD_BRANCH: ${{ github.head_ref }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          CURRENT_REPO: ${{ github.repository }}
+        run: |
+          echo "Checking PR: ${HEAD_BRANCH} -> ${BASE_BRANCH}"
+
+          case "$BASE_BRANCH" in
+            main)
+              if [ "$HEAD_REPO" != "$CURRENT_REPO" ] || [ "$HEAD_BRANCH" != "develop" ]; then
+                echo "::error::PRs into 'main' are ONLY allowed from 'develop' in this repository (got '${HEAD_BRANCH}')."
+                exit 1
+              fi
+              echo "Allowed: develop -> main"
+              ;;
+            develop)
+              case "$HEAD_BRANCH" in
+                feat/*|fix/*|chore/*|docs/*|refactor/*|test/*)
+                  echo "Allowed: ${HEAD_BRANCH} -> develop"
+                  ;;
+                *)
+                  echo "::error::PRs into 'develop' must start with feat/, fix/, chore/, docs/, refactor/, or test/ (got '${HEAD_BRANCH}')."
+                  exit 1
+                  ;;
+              esac
+              ;;
+          esac

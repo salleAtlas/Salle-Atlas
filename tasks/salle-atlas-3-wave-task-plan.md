@@ -69,7 +69,7 @@ git checkout develop && git pull origin develop && (cd backend && npm ci) && (cd
 > **Merge Priority:** **Track 1.2 (`A3`)** must merge first because it introduces `requireManager` and `views/layouts/manager-layout.ejs` needed by all Manager EJS pages. Tracks 1.3, 1.4, and 1.5 can build their model methods, validators, and controller logic immediately and wire the layout once `A3` lands.
 
 ### Track 1.1 — Client Authentication (`A1 + A2`)
-- **Assignee:** `@youssef_massmoudi`
+- **Assignee:** `@wajih_soltani`
 - **Stories & Branches:**
   - [ ] **A1 (P1):** Client Registration — `feat/auth-register`
   - [ ] **A2 (P1):** Client Login & Auth Protection — `feat/auth-login`
@@ -95,7 +95,7 @@ git checkout develop && git pull origin develop && (cd backend && npm ci) && (cd
 ### Track 1.3 — Equipment Catalog (`B1`)
 - **Assignee:** `@oussema_mellouli`
 - **Stories & Branches:**
-  - [ ] **B1 (P1):** Equipment Catalog Management — `feat/manager-equipments`
+  - [x] **B1 (P1):** Equipment Catalog Management — `feat/manager-equipments`
 - **Pre-Installed Packages Used (Backend):** `method-override`, `express-validator` *(already in `package.json`)*
 - **Owned Files:**
   - Backend: `src/models/equipment.model.js` *(append `update_details`)*, `src/middlewares/validators/equipment.validator.js` (`validateEquipment`, `checkEquipmentNotUsed`), `src/controllers/manager/managerEquipment.controller.js`, `src/routes/manager/equipment.routes.js`, `src/views/manager/equipments/index.ejs`
@@ -104,9 +104,9 @@ git checkout develop && git pull origin develop && (cd backend && npm ci) && (cd
 - **Unblocks:** `B2` (hard dependency)
 
 ### Track 1.4 — Open Space Singleton (`B5`)
-- **Assignee:** `@wajeeh_soltani`
+- **Assignee:** `@youssef_masmoudi`
 - **Stories & Branches:**
-  - [ ] **B5 (P1):** Configure Open Space Singleton — `feat/manager-open-space`
+  - [x] **B5 (P1):** Configure Open Space Singleton — `feat/manager-open-space`
 - **Pre-Installed Packages Used (Backend):** `method-override`, `express-validator` *(already in `package.json`)*
 - **Owned Files:**
   - Backend: `src/models/open_space.model.js` *(append `get_remaining_seats`, `is_available`)*, `src/middlewares/validators/openSpace.validator.js`, `src/controllers/manager/managerOpenSpace.controller.js`, `src/routes/manager/openSpace.routes.js`, `src/views/manager/open-space/edit.ejs`

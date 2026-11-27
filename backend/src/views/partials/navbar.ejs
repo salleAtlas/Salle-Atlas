@@ -1,0 +1,18 @@
+<header class="manager-navbar">
+  <div class="navbar-title">
+    <h2><%= typeof pageTitle !== 'undefined' ? pageTitle : 'Espace Manager' %></h2>
+  </div>
+  <div class="navbar-actions">
+    <% if (typeof managerEmail !== 'undefined' && managerEmail) { %>
+      <div class="manager-profile" title="<%= managerEmail %>">
+        <i class="bi bi-person-circle"></i>
+        <span class="manager-email"><%= managerEmail %></span>
+      </div>
+    <% } %>
+    <form method="POST" action="/manager/logout" class="logout-form">
+      <button type="submit" class="btn btn-secondary btn-sm">
+        <i class="bi bi-box-arrow-right"></i> Deconnexion
+      </button>
+    </form>
+  </div>
+</header>
