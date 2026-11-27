@@ -1,0 +1,66 @@
+<aside class="manager-sidebar">
+  <div class="sidebar-brand">
+    <a href="/manager/equipments" class="brand-link">
+      <span class="brand-name">Salle Atlas</span>
+      <span class="brand-badge">Espace Manager</span>
+    </a>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-group-label">Espaces & Regles</div>
+    <ul class="nav-list">
+      <li class="nav-item">
+        <a href="/manager/equipments" class="nav-link <%= typeof currentPath !== 'undefined' && currentPath.startsWith('/manager/equipments') ? 'active' : '' %>">
+          <i class="bi bi-tools"></i>
+          <span>Equipements</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/manager/open-space" class="nav-link <%= typeof currentPath !== 'undefined' && currentPath.startsWith('/manager/open-space') ? 'active' : '' %>">
+          <i class="bi bi-people"></i>
+          <span>Open Space</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/manager/operating-hours" class="nav-link <%= typeof currentPath !== 'undefined' && currentPath.startsWith('/manager/operating-hours') ? 'active' : '' %>">
+          <i class="bi bi-clock"></i>
+          <span>Horaires</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/manager/duration-limits" class="nav-link <%= typeof currentPath !== 'undefined' && currentPath.startsWith('/manager/duration-limits') ? 'active' : '' %>">
+          <i class="bi bi-hourglass-split"></i>
+          <span>Limites de duree</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="nav-group-label">Modules a venir</div>
+    <ul class="nav-list nav-list-muted">
+      <li class="nav-item">
+        <a href="/manager/rooms" class="nav-link <%= typeof currentPath !== 'undefined' && currentPath.startsWith('/manager/rooms') ? 'active' : '' %>">
+          <i class="bi bi-door-open"></i>
+          <span>Salles</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/manager/scanner" class="nav-link <%= typeof currentPath !== 'undefined' && currentPath.startsWith('/manager/scanner') ? 'active' : '' %>">
+          <i class="bi bi-qr-code-scan"></i>
+          <span>Scanner QR</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/manager/calendar/open-space" class="nav-link <%= typeof currentPath !== 'undefined' && currentPath.startsWith('/manager/calendar') ? 'active' : '' %>">
+          <i class="bi bi-calendar3"></i>
+          <span>Calendriers</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/manager/dashboard" class="nav-link <%= typeof currentPath !== 'undefined' && currentPath.startsWith('/manager/dashboard') ? 'active' : '' %>">
+          <i class="bi bi-bar-chart"></i>
+          <span>Statistiques</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</aside>
