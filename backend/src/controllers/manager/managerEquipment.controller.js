@@ -1,21 +1,11 @@
-const Equipment = require('../../models/equipment.model');
-const Room = require('../../models/room.model');
+const { CreateEquipmentDto, UpdateEquipmentDto } = require('../../dtos/equipment.dto');
+const equipmentService = require('../../services/equipment.service');
 
 const listEquipments = async (req, res, next) => {
   try {
-    const equipments =await Equipment.find().sort({ name: 1 });
-    const rooms=await Room.find({ space_type: 'room' }).select('name equipments');
+    const { equipments, usageMap } = await equipmentService.listEquipmentsWithUsage();
 
-    const usageMap = {};
-    for (const eq of equipments) {
-      const id=eq._id.toString();
-      const usedIn= rooms.filter(
-        (r) => r.equipments && r.equipments.some((e) => e.toString() === id)
-      );
-      usageMap[id]=usedIn.map((r) => r.name);
-    }
-
-    if (req.xhr ||req.headers.accept?.includes('application/json')) {
+    if (req.xhr || req.headers.accept?.includes('application/json')) {
       return res.json({ equipments, usageMap });
     }
 
@@ -33,14 +23,8 @@ const listEquipments = async (req, res, next) => {
 
 const createEquipment = async (req, res, next) => {
   try {
-    const { name, icon, description } = req.body;
-    const equipment = new Equipment({
-      name: name.trim(),
-      icon: (icon && icon.trim()) || 'bi-gear',
-      description: (description && description.trim()) || '',
-    });
-
-    await equipment.save();
+    const dto = new CreateEquipmentDto(req.body);
+    const equipment = await equipmentService.createEquipment(dto);
 
     if (req.xhr || req.headers.accept?.includes('application/json')) {
       return res.status(201).json({ message: 'Equipement cree', equipment });
@@ -51,13 +35,12 @@ const createEquipment = async (req, res, next) => {
     }
     return res.redirect('/manager/equipments');
   } catch (err) {
-    if (err.code === 11000) {
-      const errorMsg = 'Un equipement avec ce nom existe deja.';
+    if (err.status === 400) {
       if (req.xhr || req.headers.accept?.includes('application/json')) {
-        return res.status(400).json({ error: errorMsg });
+        return res.status(400).json({ error: err.message });
       }
       if (req.session) {
-        req.session.flash = { error: errorMsg };
+        req.session.flash = { error: err.message };
       }
       return res.redirect('/manager/equipments');
     }
@@ -68,21 +51,8 @@ const createEquipment = async (req, res, next) => {
 const updateEquipment = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { name, icon, description } = req.body;
-
-    const equipment = await Equipment.findById(id);
-    if (!equipment) {
-      const errorMsg = 'Equipement introuvable.';
-      if (req.xhr || req.headers.accept?.includes('application/json')) {
-        return res.status(404).json({ error: errorMsg });
-      }
-      if (req.session) {
-        req.session.flash = { error: errorMsg };
-      }
-      return res.redirect('/manager/equipments');
-    }
-
-    await equipment.update_details(name, icon, description);
+    const dto = new UpdateEquipmentDto(req.body);
+    const equipment = await equipmentService.updateEquipment(id, dto);
 
     if (req.xhr || req.headers.accept?.includes('application/json')) {
       return res.json({ message: 'Equipement modifie', equipment });
@@ -93,13 +63,12 @@ const updateEquipment = async (req, res, next) => {
     }
     return res.redirect('/manager/equipments');
   } catch (err) {
-    if (err.code === 11000) {
-      const errorMsg = 'Un equipement avec ce nom existe deja.';
+    if (err.status === 400 || err.status === 404) {
       if (req.xhr || req.headers.accept?.includes('application/json')) {
-        return res.status(400).json({ error: errorMsg });
+        return res.status(err.status).json({ error: err.message });
       }
       if (req.session) {
-        req.session.flash = { error: errorMsg };
+        req.session.flash = { error: err.message };
       }
       return res.redirect('/manager/equipments');
     }
@@ -110,18 +79,7 @@ const updateEquipment = async (req, res, next) => {
 const deleteEquipment = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const deleted = await Equipment.findByIdAndDelete(id);
-
-    if (!deleted) {
-      const errorMsg = 'Equipement introuvable.';
-      if (req.xhr || req.headers.accept?.includes('application/json')) {
-        return res.status(404).json({ error: errorMsg });
-      }
-      if (req.session) {
-        req.session.flash = { error: errorMsg };
-      }
-      return res.redirect('/manager/equipments');
-    }
+    await equipmentService.deleteEquipment(id);
 
     if (req.xhr || req.headers.accept?.includes('application/json')) {
       return res.json({ message: 'Equipement supprime' });
@@ -132,6 +90,15 @@ const deleteEquipment = async (req, res, next) => {
     }
     return res.redirect('/manager/equipments');
   } catch (err) {
+    if (err.status === 400 || err.status === 404) {
+      if (req.xhr || req.headers.accept?.includes('application/json')) {
+        return res.status(err.status).json({ error: err.message });
+      }
+      if (req.session) {
+        req.session.flash = { error: err.message };
+      }
+      return res.redirect('/manager/equipments');
+    }
     next(err);
   }
 };

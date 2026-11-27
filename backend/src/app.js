@@ -8,6 +8,7 @@ const methodOverride = require('method-override');
 const env = require('./config/env.config');
 const { sessionMiddleware } = require('./config/session.config');
 const { getHealth } = require('./controllers/api/health.controller');
+const apiRoutes = require('./routes/api/index.routes');
 const managerRoutes = require('./routes/manager/index.routes');
 const { notFound, errorHandler } = require('./middlewares/error.middleware');
 
@@ -59,12 +60,7 @@ app.use((req, res, next) => {
 
 app.get('/api/health', getHealth);
 
-// Feature routers mounted by subsequent PRs:
-const apiRoutes = require('./routes/api/index.routes');
 app.use('/api', apiRoutes);
-// Client API routers mounted by subsequent PRs:
-// app.use('/api', apiRoutes);
-
 app.use('/manager', managerRoutes);
 
 app.use(notFound);

@@ -1,16 +1,5 @@
-const crypto = require('crypto');
-const env = require('../../config/env.config');
-
-function safeEqual(a, b) {
-  if (typeof a !== 'string' || typeof b !== 'string') return false;
-  const bufA = Buffer.from(a);
-  const bufB = Buffer.from(b);
-  if (bufA.length !== bufB.length) {
-    crypto.timingSafeEqual(bufA, bufA);
-    return false;
-  }
-  return crypto.timingSafeEqual(bufA, bufB);
-}
+const { ManagerLoginDto } = require('../../dtos/managerAuth.dto');
+const managerAuthService = require('../../services/managerAuth.service');
 
 const wantsJson = (req) => Boolean(req.xhr || req.accepts(['html', 'json']) === 'json');
 
@@ -27,15 +16,10 @@ function renderLogin(req, res) {
 }
 
 function login(req, res, next) {
-  const email = String(req.body?.email || '').trim().toLowerCase();
-  const password = String(req.body?.password || '');
+  const dto = new ManagerLoginDto(req.body);
+  const result = managerAuthService.verifyManagerCredentials(dto);
 
-  const expectedEmail = String(env.MANAGER_EMAIL).trim().toLowerCase();
-  const expectedPassword = String(env.MANAGER_PASSWORD);
-
-  const isValid = safeEqual(email, expectedEmail) && safeEqual(password, expectedPassword);
-
-  if (!isValid) {
+  if (!result.isAuthenticated) {
     if (wantsJson(req)) {
       return res.status(401).json({ error: 'Identifiants invalides.' });
     }
@@ -54,7 +38,7 @@ function login(req, res, next) {
   req.session.regenerate((regenErr) => {
     if (regenErr) return next(regenErr);
     req.session.isManager = true;
-    req.session.managerEmail = env.MANAGER_EMAIL;
+    req.session.managerEmail = result.managerEmail;
     req.session.save((saveErr) => {
       if (saveErr) return next(saveErr);
       if (wantsJson(req)) {
