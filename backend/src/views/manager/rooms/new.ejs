@@ -1,0 +1,34 @@
+<h1 class="section-title">Nouvelle salle</h1>
+
+<div class="content-card">
+  <form action="/manager/rooms" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+      <label class="form-label">Nom</label>
+      <input class="form-control" name="name" required>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      <textarea class="form-control" name="description" required></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Capacite</label>
+      <input class="form-control" type="number" name="capacity" min="1" step="1" required>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Prix / heure (DT)</label>
+      <input class="form-control" type="number" name="price_per_hour" min="0.01" step="0.01" required>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Equipements</label>
+      <% for (const eq of equipments) { %>
+        <label><input type="checkbox" name="equipments" value="<%= eq._id %>"> <%= eq.name %></label>
+      <% } %>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Photos (max 5)</label>
+      <input class="form-control" type="file" name="photos" accept="image/*" multiple>
+    </div>
+    <button type="submit" class="btn btn-primary">Creer</button>
+    <a href="/manager/rooms" class="btn btn-secondary">Annuler</a>
+  </form>
+</div>

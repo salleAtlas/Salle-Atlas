@@ -1,0 +1,44 @@
+<div class="section-header">
+  <h1 class="section-title">Salles</h1>
+  <a href="/manager/rooms/new" class="btn btn-primary">Nouvelle salle</a>
+</div>
+
+<div class="content-card">
+  <% if (rooms.length === 0) { %>
+    <p class="sub-note">Aucune salle pour le moment.</p>
+  <% } else { %>
+    <table style="width:100%">
+      <tr>
+        <th>Photo</th>
+        <th>Nom</th>
+        <th>Capacite</th>
+        <th>Prix / heure</th>
+        <th>Equipements</th>
+        <th>Active</th>
+        <th>Actions</th>
+      </tr>
+      <% for (const room of rooms) { %>
+        <tr>
+          <td>
+            <% if (room.photos.length > 0) { %>
+              <img src="<%= room.photos[0] %>" alt="" width="60">
+            <% } %>
+          </td>
+          <td><%= room.name %></td>
+          <td><%= room.capacity %></td>
+          <td><%= room.price_per_hour %> DT</td>
+          <td>
+            <% for (const eq of room.equipments) { %>
+              <span><%= eq.name %></span>
+            <% } %>
+          </td>
+          <td><%= room.is_active ? 'Oui' : 'Non' %></td>
+          <td>
+            <a href="/manager/rooms/<%= room._id %>/edit" class="btn btn-sm btn-primary">Modifier</a>
+            <%- include('../../partials/delete-confirm-modal', { action: '/manager/rooms/' + room._id, message: 'Supprimer cette salle ?' }) %>
+          </td>
+        </tr>
+      <% } %>
+    </table>
+  <% } %>
+</div>

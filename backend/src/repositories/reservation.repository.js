@@ -19,6 +19,19 @@ async function sumOverlappingActivePeople(spaceId, start, end, now = new Date())
   return taken;
 }
 
+async function countFutureActiveBySpace(spaceId) {
+  const now = new Date();
+  return Reservation.countDocuments({
+    space_id: spaceId,
+    end_time: { $gt: now },
+    $or: [
+      { status: ReservationStatus.CONFIRMED },
+      { status: ReservationStatus.PENDING, pending_expires_at: { $gt: now } },
+    ],
+  });
+}
+
 module.exports = {
   sumOverlappingActivePeople,
+  countFutureActiveBySpace,
 };
