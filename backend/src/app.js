@@ -59,6 +59,9 @@ app.use((req, res, next) => {
 
 app.get('/api/health', getHealth);
 
+// Feature routers mounted by subsequent PRs:
+const apiRoutes = require('./routes/api/index.routes');
+app.use('/api', apiRoutes);
 // Client API routers mounted by subsequent PRs:
 // app.use('/api', apiRoutes);
 

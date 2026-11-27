@@ -13,4 +13,9 @@ const clientSchema = new mongoose.Schema(
   { collection: 'clients', timestamps: true }
 );
 
+clientSchema.statics.register = async function (first_name, last_name, email, password, phone) {
+  const authService = require('../services/auth.service');
+  return authService.registerClient(first_name, last_name, email, password, phone);
+};
+
 module.exports = mongoose.model('Client', clientSchema);
