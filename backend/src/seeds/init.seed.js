@@ -1,10 +1,10 @@
-const GlobalSetting = require('../models/global_setting.model');
-const OpenSpace = require('../models/open_space.model');
+const globalSettingRepository = require('../repositories/globalSetting.repository');
+const openSpaceRepository = require('../repositories/openSpace.repository');
 
 async function runInitialSeed() {
-  const existingSetting = await GlobalSetting.findOne();
+  const existingSetting = await globalSettingRepository.findSingleton();
   if (!existingSetting) {
-    await GlobalSetting.create({
+    await globalSettingRepository.createSingleton({
       min_duration_hours: 1,
       max_duration_hours: 8,
       opening_time: '08:00',
@@ -15,9 +15,9 @@ async function runInitialSeed() {
     console.log('Seeded singleton GlobalSetting');
   }
 
-  const existingOpenSpace = await OpenSpace.findOne();
+  const existingOpenSpace = await openSpaceRepository.findSingleton();
   if (!existingOpenSpace) {
-    await OpenSpace.create({
+    await openSpaceRepository.createSingleton({
       name: 'Main Open Space',
       description: 'Shared coworking open space with flexible seating.',
       is_active: true,

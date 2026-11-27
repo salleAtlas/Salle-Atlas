@@ -1,11 +1,10 @@
-const Client = require('../../models/client.model');
+const { RegisterClientDto, LoginClientDto } = require('../../dtos/auth.dto');
 const authService = require('../../services/auth.service');
 
 async function register(req, res, next) {
   try {
-    const { first_name, last_name, email, password, phone } = req.body;
-    
-    const client = await Client.register(first_name, last_name, email, password, phone);
+    const dto = new RegisterClientDto(req.body);
+    const client = await authService.registerClient(dto);
 
     return res.status(201).json({
       message: 'Client registered successfully',
@@ -18,8 +17,8 @@ async function register(req, res, next) {
 
 async function login(req, res, next) {
   try {
-    const { email, password } = req.body;
-    const { client, token } = await Client.login(email, password);
+    const dto = new LoginClientDto(req.body);
+    const { client, token } = await authService.loginClient(dto);
 
     return res.status(200).json({
       message: 'Login successful',

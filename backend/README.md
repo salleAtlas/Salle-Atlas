@@ -36,6 +36,7 @@ curl http://localhost:5000/api/health
 | `npm run dev` | `nodemon server.js` | Local dev server with auto-restart on save |
 | `npm start` | `node server.js` | Production start |
 | `npm test` | `jest --runInBand` | Run Jest + Supertest test suite |
+| `npm run check` | `npm test` | CI quality gate test suite |
 
 ---
 
@@ -78,13 +79,14 @@ Breaking any of these will fail PR review:
 3. **Exact `snake_case` Schema Fields:** Do not rename fields in `src/models/`. Both the UML class diagram and Angular `core/models/` depend on the exact `snake_case` property names already locked in.
 4. **Express Route Ordering (`/me` before `/:id`):** In `src/routes/api/reservation.routes.js`, `GET /api/reservations/me` **MUST** be declared **BEFORE** `GET /api/reservations/:id` or Express will try to parse `"me"` as a MongoDB `ObjectId`.
 5. **Stripe Webhook Raw Body:** `POST /api/payments/webhook` **MUST** use `express.raw({ type: 'application/json' })` and be mounted in `src/app.js` **BEFORE** `app.use(express.json())`. **Only the verified Stripe webhook confirms a reservation** — never trust the browser redirect.
-6. **Singletons Stay Singletons:** Never insert a second `GlobalSetting` or `OpenSpace` document; always read/update the single seeded document.
+6. **Singletons Stay Singletons:** Never insert a second `GlobalSetting` or `OpenSpace` document; always read/update the single seeded document via repositories.
 7. **Normalized Enums Only:** Always import statuses from `src/models/enums.js`:
    - `ReservationStatus`: `'PENDING'`, `'CONFIRMED'`, `'EXPIRED'`
    - `PaymentStatus`: `'PENDING'`, `'SUCCESSFUL'`, `'FAILED'`
 8. **QR Security & Atomic Scan:** QR tokens contain **only** `{ res_id, ref }` signed with `QR_JWT_SECRET` (never client PII). Entry validation (F2) must mark `qr_used: true` atomically via `findOneAndUpdate({ _id, status: 'CONFIRMED', qr_used: false }, ...)` to prevent double-entry race conditions.
 9. **Database Indexing:** Every field used in `.sort()` must have an explicit schema index (required for Cosmos DB compatibility and query performance).
 10. **Express 5 Note:** This repo runs **Express 5** (`^5.3.0`). Rejected promises inside `async` route handlers automatically forward to `errorHandler`. Never use bare `'*'` wildcard routes (Express 5 throws on them).
+11. **Strict 8-Layer Architecture:** `src/models/` holds pure Mongoose schemas and indexes only (zero methods, zero statics). All backend features strictly follow the unidirectional 8-layer flow (`routes → validators → controllers → dtos → services → repositories → models` and `mappers → views/JSON`), automatically enforced by `tests/architecture.test.js` in CI.
 
 ---
 
@@ -101,11 +103,14 @@ backend/
 └── src/
     ├── app.js                         # Express setup, middlewares, raw webhook mount, routers
     ├── config/                        # env, db, session, mail, multer, stripe configs
-    ├── models/                        # Locked UML Mongoose schemas + enums.js
-    ├── seeds/init.seed.js             # Upserts singleton GlobalSetting & OpenSpace
+    ├── dtos/                          # Request input DTOs (type-casting, trimming, normalizing)
+    ├── mappers/                       # Output mappers (pure functions doc -> safe DTO)
+    ├── models/                        # Pure Mongoose schemas + indexes + enums.js (NO methods/statics)
+    ├── repositories/                  # Only layer allowed to query MongoDB models
+    ├── services/                      # Business logic, domain rules, auth, external services
+    ├── seeds/init.seed.js             # Upserts singleton GlobalSetting & OpenSpace via repos
     ├── middlewares/                   # error, rateLimiter, authClient, requireManager, stripe, qr
     │   └── validators/                # express-validator chains & domain guards
-    ├── services/                      # availability, email, qr, stripe business logic
     ├── jobs/                          # expirePendingReservations.job.js (10-min slot release)
     ├── controllers/
     │   ├── api/                       # JSON controllers for /api/...
@@ -120,19 +125,19 @@ backend/
 
 ## 6. Locked Mongoose Models (`src/models/`)
 
-All 8 schemas are already created in `src/models/` with their required indexes. Add your story's static/instance methods directly to the corresponding model file.
+All 8 schemas in `src/models/` are pure schemas + indexes (no `.methods` or `.statics`). Business logic belongs in `src/services/`, database queries belong in `src/repositories/`, input normalization in `src/dtos/`, and output shaping in `src/mappers/`.
 
-| File | Collection | Notes & Key Methods to Implement |
+| File | Collection | Architecture Mapping (Repo / DTO / Mapper / Service) |
 | :--- | :--- | :--- |
 | `enums.js` | — | Frozen `ReservationStatus` & `PaymentStatus` |
-| `client.model.js` | `clients` | `register`, `login`, `request_password_reset`, `reset_password` (A1, A2, A4) |
-| `space.model.js` | `spaces` | Abstract base (`discriminatorKey: 'space_type'`). `has_upcoming_reservations` (B4) |
-| `room.model.js` | `spaces` | Discriminator `'room'`. `is_available`, `get_included_equipments`, `update_room` (B2, B3, C1) |
-| `open_space.model.js` | `spaces` | Singleton discriminator `'open_space'`. `get_remaining_seats`, `is_available` (B5, C1, G3) |
-| `equipment.model.js` | `equipments` | No price field. `update_details` (B1) |
-| `global_setting.model.js` | `global_settings` | Singleton. `update_hours`, `update_limits`, `is_within_operating_hours` (B6, B7, C1) |
-| `reservation.model.js` | `reservations` | `calculate_total`, `check_availability`, `check_capacity`, `confirm`, `expire`, `generate_qr_token`, `generate_qr_pdf_buffer`, `validate_entry` (C2, D1, E1, E2, F2) |
-| `payment.model.js` | `payments` | 1-to-0..1 with Reservation. `create_stripe_session`, `confirm_payment` (D1) |
+| `client.model.js` | `clients` | `client.repository.js`, `auth.dto.js`, `client.mapper.js`, `auth.service.js` |
+| `space.model.js` | `spaces` | Abstract base schema (`discriminatorKey: 'space_type'`). |
+| `room.model.js` | `spaces` | `room.repository.js`, `room.dto.js`, `space.mapper.js`, `room.service.js` |
+| `open_space.model.js` | `spaces` | `openSpace.repository.js`, `openSpace.dto.js`, `space.mapper.js`, `openSpace.service.js` |
+| `equipment.model.js` | `equipments` | `equipment.repository.js`, `equipment.dto.js`, `equipment.mapper.js`, `equipment.service.js` |
+| `global_setting.model.js` | `global_settings` | `globalSetting.repository.js`, `setting.dto.js`, `setting.mapper.js`, `setting.service.js` |
+| `reservation.model.js` | `reservations` | `reservation.repository.js`, `reservation.dto.js`, `reservation.mapper.js`, `reservation.service.js` |
+| `payment.model.js` | `payments` | `payment.repository.js`, `payment.dto.js`, `payment.mapper.js`, `stripe.service.js` |
 
 ---
 

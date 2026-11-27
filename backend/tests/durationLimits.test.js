@@ -1,6 +1,8 @@
 const express = require('express');
 const request = require('supertest');
 const GlobalSetting = require('../src/models/global_setting.model');
+const settingService = require('../src/services/setting.service');
+const { UpdateDurationLimitsDto } = require('../src/dtos/setting.dto');
 const durationLimitsRoutes = require('../src/routes/manager/durationLimits.routes');
 
 const app = express().use(express.json()).use('/manager/duration-limits', durationLimitsRoutes);
@@ -34,14 +36,15 @@ describe('B7 - Min/max reservation duration limits', () => {
   });
 
   test('update_limits only touches duration fields, leaving opening hours untouched', async () => {
-    const settings = await GlobalSetting.findOne();
-    const before = { opening_time: settings.opening_time, closing_time: settings.closing_time };
+    const before = await settingService.getSettings();
 
-    await settings.update_limits({ min_duration_hours: 1, max_duration_hours: 4 });
+    const updated = await settingService.updateDurationLimits(
+      new UpdateDurationLimitsDto({ min_duration_hours: 1, max_duration_hours: 4 })
+    );
 
-    expect(settings.min_duration_hours).toBe(1);
-    expect(settings.max_duration_hours).toBe(4);
-    expect(settings.opening_time).toBe(before.opening_time);
-    expect(settings.closing_time).toBe(before.closing_time);
+    expect(updated.min_duration_hours).toBe(1);
+    expect(updated.max_duration_hours).toBe(4);
+    expect(updated.opening_time).toBe(before.opening_time);
+    expect(updated.closing_time).toBe(before.closing_time);
   });
 });

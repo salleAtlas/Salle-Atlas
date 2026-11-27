@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
-
-const JWT_SECRET = process.env.JWT_SECRET || 'change_me_client_jwt_secret';
+const env = require('../config/env.config');
 
 async function authClient(req, res, next) {
   try {
@@ -16,7 +15,7 @@ async function authClient(req, res, next) {
 
     let decoded;
     try {
-      decoded = jwt.verify(token, JWT_SECRET);
+      decoded = jwt.verify(token, env.JWT_SECRET);
     } catch {
       return res.status(401).json({ error: 'Invalid or expired token' });
     }

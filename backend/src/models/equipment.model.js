@@ -10,11 +10,4 @@ const equipmentSchema = new mongoose.Schema(
   { collection: 'equipments', timestamps: true }
 );
 
-equipmentSchema.methods.update_details = async function (name, icon, description) {
-  if (name!==undefined) this.name= name.trim();
-  if (icon!==undefined) this.icon=icon.trim();
-  if (description !== undefined) this.description=description.trim();
-  return this.save();
-};
-
 module.exports = mongoose.model('Equipment', equipmentSchema);

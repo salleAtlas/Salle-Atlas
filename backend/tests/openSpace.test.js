@@ -2,6 +2,7 @@ const express = require('express');
 const request = require('supertest');
 const OpenSpace = require('../src/models/open_space.model');
 const Reservation = require('../src/models/reservation.model');
+const openSpaceService = require('../src/services/openSpace.service');
 const openSpaceRoutes = require('../src/routes/manager/openSpace.routes');
 
 const app = express().use(express.json()).use('/manager/open-space', openSpaceRoutes);
@@ -35,10 +36,10 @@ describe('B5 - Open space singleton', () => {
       { ...base, client_id: space._id, reference_code: 'R3', start_time: at(10), end_time: at(12), number_of_people: 8, status: 'EXPIRED', pending_expires_at: at(9) },
     ]);
 
-    expect(await space.get_remaining_seats(at(10), at(11))).toBe(space.total_seats - 15);
-    expect(await space.get_remaining_seats(at(11), at(12))).toBe(space.total_seats - 5);
-    expect(await space.get_remaining_seats(at(14), at(16))).toBe(space.total_seats);
-    expect(await space.is_available(at(10), at(11), space.total_seats)).toBe(false);
-    expect(await space.is_available(at(14), at(16), space.total_seats)).toBe(true);
+    expect(await openSpaceService.getRemainingSeats(at(10), at(11))).toBe(space.total_seats - 15);
+    expect(await openSpaceService.getRemainingSeats(at(11), at(12))).toBe(space.total_seats - 5);
+    expect(await openSpaceService.getRemainingSeats(at(14), at(16))).toBe(space.total_seats);
+    expect(await openSpaceService.isAvailable(at(10), at(11), space.total_seats)).toBe(false);
+    expect(await openSpaceService.isAvailable(at(14), at(16), space.total_seats)).toBe(true);
   });
 });
