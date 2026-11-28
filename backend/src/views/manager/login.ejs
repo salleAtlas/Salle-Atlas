@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include('../partials/head') %>
+</head>
+<body class="login-page">
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-brand">
+        <h1 class="brand-title">Salle Atlas</h1>
+        <span class="brand-badge">Espace Manager</span>
+      </div>
+
+      <%- include('../partials/flash-messages') %>
+
+      <form method="POST" action="/manager/login" class="login-form">
+        <div class="form-group">
+          <label class="form-label" for="email">Adresse email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+            placeholder="manager@salleatlas.test"
+            required
+            autofocus
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Mot de passe</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-control"
+            placeholder="••••••••"
+            required
+          >
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">
+          <i class="bi bi-box-arrow-in-right"></i> Se connecter
+        </button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

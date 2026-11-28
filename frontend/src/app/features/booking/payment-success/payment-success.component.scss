@@ -1,0 +1,138 @@
+.nook-page {
+  min-height: calc(100vh - 64px);
+  background: linear-gradient(135deg, #f5efe8 0%, #ead8c3 55%, #dec3a3 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+  font-family: inherit;
+}
+
+.success-wrapper {
+  width: 100%;
+  max-width: 440px;
+  text-align: center;
+}
+
+.nook-card {
+  background: #faf6f1;
+  border-radius: 24px;
+  padding: 44px 36px;
+  box-shadow: 0 18px 45px rgba(45, 32, 20, 0.08);
+}
+
+.status-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+}
+
+.success-circle {
+  background: #cde3d3;
+}
+
+.pending-circle {
+  background: #f2e2be;
+}
+
+.error-circle {
+  background: #efd4d1;
+}
+
+.nook-title {
+  margin: 0 0 8px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #281e17;
+}
+
+.nook-subtitle {
+  margin: 0 0 28px;
+  font-size: 14px;
+  color: #6d5c4e;
+  line-height: 1.5;
+}
+
+.dark-summary-card {
+  background: #281e17;
+  color: #faf6f1;
+  border-radius: 24px;
+  padding: 28px 24px;
+  text-align: left;
+  margin-bottom: 18px;
+  box-shadow: 0 18px 40px rgba(40, 30, 23, 0.16);
+}
+
+.summary-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.summary-meta {
+  font-size: 13px;
+  color: #d6c8ba;
+  margin-bottom: 18px;
+}
+
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill-badge {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-valid {
+  background: #cde3d3;
+  color: #203c2a;
+}
+
+.badge-neutral {
+  background: #efe3d4;
+  color: #281e17;
+}
+
+.btn-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 44px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  box-sizing: border-box;
+}
+
+.btn-dark {
+  background: #281e17;
+  color: #faf6f1;
+}
+
+.btn-caramel {
+  background: #c18753;
+  color: #281e17;
+}
+
+.btn-light {
+  background: #faf6f1;
+  color: #281e17;
+  border: 1px solid #e4d8ca;
+}

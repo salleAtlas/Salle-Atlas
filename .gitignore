@@ -1,0 +1,9 @@
+node_modules/
+.env
+backend/.env
+backend/uploads/rooms/*
+!backend/uploads/rooms/.gitkeep
+frontend/dist/
+frontend/.angular/
+.DS_Store
+*.log

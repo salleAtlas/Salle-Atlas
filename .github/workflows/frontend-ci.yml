@@ -1,0 +1,47 @@
+name: Frontend CI
+
+on:
+  pull_request:
+    paths: ["frontend/**", ".github/workflows/frontend-ci.yml", ".nvmrc"]
+  push:
+    branches: [develop, main]
+    paths: ["frontend/**", ".github/workflows/frontend-ci.yml", ".nvmrc"]
+
+# A new push to the same PR cancels the previous, now useless, run.
+concurrency:
+  group: frontend-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies (fails if package-lock.json is out of date)
+        run: npm ci
+
+      # Production build + Karma unit tests: the same command developers run locally.
+      - name: Quality gate
+        env:
+          CHROME_BIN: /usr/bin/google-chrome
+        run: npm run check
+
+      # Informational only: flags high/critical prod advisories without blocking merges.
+      - name: Production security audit
+        continue-on-error: true
+        run: npm audit --omit=dev --audit-level=high
