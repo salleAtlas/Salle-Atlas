@@ -14,7 +14,9 @@
     "jsonwebtoken": "^9.0.3",
     "method-override": "^3.0.0",
     "mongoose": "^9.12.2",
-    "morgan": "^1.12.1"
+    "morgan": "^1.12.1",
+    "node-cron": "^4.6.0",
+    "stripe": "^23.2.0"
   },
   "devDependencies": {
     "jest": "^30.5.2",

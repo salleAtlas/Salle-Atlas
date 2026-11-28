@@ -1,0 +1,71 @@
+<div class="nook-page">
+  <div class="success-wrapper">
+    @if (isLoading) {
+      <div class="nook-card center-card">
+        <div class="status-circle pending-circle"></div>
+        <h1 class="nook-title">Vérification...</h1>
+        <p class="nook-subtitle">Confirmation de votre paiement en cours.</p>
+      </div>
+    } @else if (errorMessage) {
+      <div class="nook-card center-card">
+        <div class="status-circle error-circle"></div>
+        <h1 class="nook-title">Erreur</h1>
+        <p class="nook-subtitle">{{ errorMessage }}</p>
+        <div class="btn-stack">
+          <a class="btn-pill btn-dark" routerLink="/search">Retour à l'accueil</a>
+        </div>
+      </div>
+    } @else if (reservation) {
+      @if (reservation.status === 'CONFIRMED') {
+        <div class="status-circle success-circle"></div>
+        <h1 class="nook-title">C'est confirmé.</h1>
+        <p class="nook-subtitle">Votre réservation est validée.</p>
+
+        <div class="dark-summary-card">
+          <div class="summary-title">
+            {{ reservation.space_type === 'room' ? 'Salle réservée' : 'Open Space' }}
+          </div>
+          <div class="summary-meta">
+            {{ reservation.date }} · {{ reservation.number_of_people }} pers. · {{ reservation.total_amount }} DT
+          </div>
+
+          <div class="badge-row">
+            <span class="pill-badge badge-valid">Valide</span>
+            <span class="pill-badge badge-neutral">{{ reservation.reference_code }}</span>
+            <span class="pill-badge badge-neutral">Confirmé</span>
+          </div>
+        </div>
+
+        <div class="btn-stack">
+          <a class="btn-pill btn-dark" routerLink="/my-reservations">Mes réservations</a>
+          <a class="btn-pill btn-light" routerLink="/search">Retour à l'accueil</a>
+        </div>
+      } @else if (reservation.status === 'PENDING') {
+        <div class="nook-card center-card">
+          <div class="status-circle pending-circle"></div>
+          <h1 class="nook-title">Paiement en attente</h1>
+          <p class="nook-subtitle">
+            Le paiement est en cours de validation. Réessayez dans quelques secondes.
+          </p>
+          <div class="btn-stack">
+            <button class="btn-pill btn-caramel" (click)="checkStatus()">
+              Vérifier à nouveau
+            </button>
+            <a class="btn-pill btn-light" routerLink="/search">Retour à l'accueil</a>
+          </div>
+        </div>
+      } @else {
+        <div class="nook-card center-card">
+          <div class="status-circle error-circle"></div>
+          <h1 class="nook-title">Créneau expiré.</h1>
+          <p class="nook-subtitle">
+            Le délai de 10 minutes est dépassé. Veuillez effectuer une nouvelle réservation.
+          </p>
+          <div class="btn-stack">
+            <a class="btn-pill btn-dark" routerLink="/search">Nouvelle recherche</a>
+          </div>
+        </div>
+      }
+    }
+  </div>
+</div>

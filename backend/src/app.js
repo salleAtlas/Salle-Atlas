@@ -11,6 +11,8 @@ const { getHealth } = require('./controllers/api/health.controller');
 const apiRoutes = require('./routes/api/index.routes');
 const managerRoutes = require('./routes/manager/index.routes');
 const { notFound, errorHandler } = require('./middlewares/error.middleware');
+const { verifyStripeWebhook } = require('./middlewares/stripe.middleware');
+const paymentController = require('./controllers/api/payment.controller');
 
 const app = express();
 
@@ -28,8 +30,13 @@ if (env.NODE_ENV !== 'test') {
 app.use(express.static(path.join(__dirname, '../public')));
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-// GUARDRAIL (D1): Mount POST /api/payments/webhook with express.raw({ type: 'application/json' })
-// strictly BEFORE app.use(express.json()).
+
+app.post(
+  '/api/payments/webhook',
+  express.raw({ type: 'application/json' }),
+  verifyStripeWebhook,
+  paymentController.handleWebhook
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

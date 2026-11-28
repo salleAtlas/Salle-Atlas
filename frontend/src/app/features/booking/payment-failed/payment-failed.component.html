@@ -1,0 +1,31 @@
+<div class="nook-page">
+  <div class="nook-card">
+    <div class="status-circle error-circle"></div>
+
+    <h1 class="nook-title">Paiement refusé.</h1>
+    <p class="nook-subtitle">
+      Ta carte n'a pas été débitée. Ton créneau reste gardé pendant 10 minutes.
+    </p>
+
+    @if (errorMessage) {
+      <p class="inline-error" role="alert">{{ errorMessage }}</p>
+    }
+
+    <div class="btn-stack">
+      @if (reservationId) {
+        <button
+          class="btn-pill btn-caramel"
+          (click)="retryPayment()"
+          [disabled]="isRetrying"
+        >
+          @if (isRetrying) {
+            <span>Redirection...</span>
+          } @else {
+            <span>Réessayer</span>
+          }
+        </button>
+      }
+      <a class="btn-pill btn-light" routerLink="/search">Choisir un autre créneau</a>
+    </div>
+  </div>
+</div>
